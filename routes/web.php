@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+Route::get('/order', [OrderController::class, 'index']);
+Route::get('/order/create', [OrderController::class, 'create']);
+Route::post('/order', [OrderController::class, 'store']);
+Route::get('/order/edit/{id}', [OrderController::class, 'edit']);
+Route::patch('/order/update/{id}', [OrderController::class, 'update']);
+Route::delete('/order/delete/{id}', [OrderController::class, 'destroy']);
