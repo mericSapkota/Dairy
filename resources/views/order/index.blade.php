@@ -13,6 +13,7 @@
       <th>Time</th>
       <th>Edit</th>
       <th>Delete</th>
+      <th>PayNow</th>
     </tr>
     @foreach($order as $o)
     <tr>
@@ -33,7 +34,10 @@
           <input class="mt-10" type="submit" value="delete">
         </form>
       </td>
+      <td><a href="/payment/pay/{{$o->id}}"><button>Pay Online</button></a> </td>
     </tr>
     @endforeach
   </table>
+  <p>Note: You can pay with cash in office</p>
+
 </div>

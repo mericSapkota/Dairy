@@ -2,25 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Traits\FileStorage;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use FileStorage;
+
     public function index()
     {
-        //
+
+        $payment = Payment::where('user_id', Auth::id())->get();
+
+        return view("payment.index", compact('payment'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $payment = Order::find($id);
+        return view('payment.pay', compact('payment'));
     }
 
     /**
@@ -28,7 +35,13 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $payment = Payment::create($request->except('user_id', 'ss') +
+            ['user_id' => Auth::id()] +
+            [
+                'ss' => $this->storeFile("payment/images", $request->file('ss'))
+            ] + ['mode' => 'online']);
+        return redirect('/payment');
     }
 
     /**

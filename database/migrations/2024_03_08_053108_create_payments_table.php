@@ -6,24 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('ss');
-            $table->string('mode');
+            $table->string('mode')->default("online");
             $table->float('amount');
             $table->text('remarks')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+  
+
     public function down(): void
     {
         Schema::dropIfExists('payments');
